@@ -1,13 +1,11 @@
-@extends('layout')
-
-@section('content')
-    <a href="/" class="flex items-center gap-2">
+<x-layout>
+    <a href="/" class="flex items-center gap-2 w-fit">
         <i class="fa-solid fa-arrow-left-long"></i>
         <span class="hover:underline">Back</span>
     </a>
     @include('partials._search')
     <section>
-        <x-card class="p-10">
+        <x-card class="p-10 mb-24">
             <div
                 class="flex flex-col items-center justify-center text-center"
             >
@@ -18,17 +16,7 @@
                 />
                 <h3 class="text-2xl mb-2">{{ $listing->title }}</h3>
                 <div class="text-xl font-bold mb-4">{{ $listing->company }}</div>
-                <ul class="flex">
-                    @foreach(explode(',', $listing->tags) as $tag)
-                        <a href="#">
-                            <li
-                                class="flex items-center justify-center bg-black text-white rounded-xl py-1 px-3 mr-2 text-xs"
-                            >
-                                {{ ucwords($tag) }}
-                            </li>
-                        </a>
-                    @endforeach
-                </ul>
+                <x-listing-tags :tags="explode(',', $listing->tags)"/>
                 <div class="text-lg my-4">
                     <i class="fa-solid fa-location-dot"></i> {{ $listing->location }}
                 </div>
@@ -56,4 +44,4 @@
             </div>
         </x-card>
     </section>
-@endsection
+</x-layout>

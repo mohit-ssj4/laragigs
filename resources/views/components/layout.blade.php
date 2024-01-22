@@ -20,21 +20,23 @@
 </head>
 <body class="h-screen font-space-grotesk">
 <main class="flex flex-col gap-6 container mx-auto p-2">
-    <nav class="flex justify-between items-center mb-4">
-        <a href="/">
-            <img class="w-24 logo" src="{{ asset('images/logo.png') }}" alt=""/></a>
-        <ul class="flex gap-6 text-lg">
-            <li>
-                <a href="register.html" class="hover:text-laravel"><i class="fa-solid fa-user-plus"></i> Register</a>
-            </li>
-            <li>
-                <a href="login.html" class="hover:text-laravel"><i class="fa-solid fa-arrow-right-to-bracket"></i>
-                    Login
-                </a>
-            </li>
-        </ul>
-    </nav>
-    @yield('content')
+    <header>
+        <nav class="flex justify-between items-center mb-4">
+            <a href="/">
+                <img class="w-24 logo" src="{{ asset('images/logo.png') }}" alt=""/></a>
+            <ul class="flex gap-6 text-lg">
+                <li>
+                    <a href="register.html" class="hover:text-laravel"><i class="fa-solid fa-user-plus"></i> Register</a>
+                </li>
+                <li>
+                    <a href="login.html" class="hover:text-laravel"><i class="fa-solid fa-arrow-right-to-bracket"></i>
+                        Login
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    {{ $slot }}
     <footer
         class="fixed bottom-0 left-0 w-full flex items-center justify-start font-bold bg-laravel text-white h-20 mt-48 opacity-90 md:justify-center"
     >
