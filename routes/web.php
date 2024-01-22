@@ -14,23 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::get('/posts/{id}', function ($id) {
-//    return response("The post id is: {$id}");
-//})->where('id', '[0-9]+');
-//
-//Route::get('/search', function (Request $request) {
-//    dd($request->page);
-//});
-
 Route::get('/', function () {
     return view('listings', [
         'heading' => 'Latest Listings',
-        'listings' => Listing::getAll()
+        'listings' => Listing::all()
     ]);
 });
 
 Route::get('/listings/{id}', function (int $id) {
     return view('listing', [
-        'listing' => Listing::find($id)
+        'listing' => Listing::where('id', $id)->get()
     ]);
 })->where('id', '[0-9]+');

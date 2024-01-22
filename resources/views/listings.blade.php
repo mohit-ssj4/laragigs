@@ -18,17 +18,18 @@
     </h1>
     @if(count($listings) === 0)
         <p>No listings found</p>
+    @else
+        <section class="flex flex-col gap-6">
+            @foreach($listings as $listing)
+                <article class="flex flex-col gap-2">
+                    <h2 class="text-xl font-bold underline">
+                        <a href="/listings/{{$listing['id']}}">{{$listing['title']}}</a>
+                    </h2>
+                    <p>{{$listing['description']}}</p>
+                </article>
+            @endforeach
+        </section>
     @endif
-    <section class="flex flex-col gap-6">
-        @foreach($listings as $listing)
-            <article class="flex flex-col gap-2">
-                <h2 class="text-xl font-bold underline">
-                    <a href="/listings/{{$listing['id']}}">{{$listing['title']}}</a>
-                </h2>
-                <p>{{$listing['description']}}</p>
-            </article>
-        @endforeach
-    </section>
 </main>
 </body>
 </html>
