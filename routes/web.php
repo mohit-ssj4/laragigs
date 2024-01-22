@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Models\Listing;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,14 +14,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//Route::get('/posts/{id}', function ($id) {
+//    return response("The post id is: {$id}");
+//})->where('id', '[0-9]+');
+//
+//Route::get('/search', function (Request $request) {
+//    dd($request->page);
+//});
+
 Route::get('/', function () {
-    return view('listings');
+    return view('listings', [
+        'heading' => 'Latest Listings',
+        'listings' => Listing::getAll()
+    ]);
 });
 
-Route::get('/posts/{id}', function($id) {
-   return response("The post id is: {$id}");
+Route::get('/listings/{id}', function (int $id) {
+    return view('listing', [
+        'listing' => Listing::find($id)
+    ]);
 })->where('id', '[0-9]+');
-
-Route::get('/search', function(Request $request) {
-   dd($request->page);
-});
