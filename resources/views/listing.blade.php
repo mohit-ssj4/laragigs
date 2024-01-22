@@ -1,37 +1,59 @@
-<!doctype html>
-<html lang="en" class="h-screen scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="description" content="laravel application to post job listings"/>
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=space-grotesk:400,500,600,700" rel="stylesheet"/>
-    @vite(['resources/css/app.css','resources/js/app.js'])
-    <title>Welcome</title>
-</head>
-<body class="h-screen font-space-grotesk">
-<main class="p-2 flex flex-col gap-6">
-    <a href="/" class="flex items-center gap-2 hover:underline">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-             class="w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18"/>
-        </svg>
-        <span>Back</span>
+@extends('layout')
+
+@section('content')
+    <a href="/" class="flex items-center gap-2">
+        <i class="fa-solid fa-arrow-left-long"></i>
+        <span class="hover:underline">Back</span>
     </a>
-    @if(count($listing) === 0)
-        <p>No listing found</p>
-    @else
-        <section class="flex flex-col gap-6">
-            @foreach($listing as $list)
-                <article class="flex flex-col gap-2">
-                    <h1 class="text-3xl font-bold">{{$list['title']}}</h1>
-                    <p>{{$list['description']}}</p>
-                </article>
-            @endforeach
-        </section>
-    @endif
-</main>
-</body>
-</html>
+    @include('partials._search')
+    <section>
+        <x-card class="p-10">
+            <div
+                class="flex flex-col items-center justify-center text-center"
+            >
+                <img
+                    class="w-48 mr-6 mb-6"
+                    src="{{ asset('images/no-image.png') }}"
+                    alt=""
+                />
+                <h3 class="text-2xl mb-2">{{ $listing->title }}</h3>
+                <div class="text-xl font-bold mb-4">{{ $listing->company }}</div>
+                <ul class="flex">
+                    @foreach(explode(',', $listing->tags) as $tag)
+                        <a href="#">
+                            <li
+                                class="flex items-center justify-center bg-black text-white rounded-xl py-1 px-3 mr-2 text-xs"
+                            >
+                                {{ ucwords($tag) }}
+                            </li>
+                        </a>
+                    @endforeach
+                </ul>
+                <div class="text-lg my-4">
+                    <i class="fa-solid fa-location-dot"></i> {{ $listing->location }}
+                </div>
+                <div class="border border-gray-200 w-full mb-6"></div>
+                <div>
+                    <h3 class="text-3xl font-bold mb-4">
+                        Job Description
+                    </h3>
+                    <div class="text-lg space-y-6">
+                        <p>{{ $listing->description }}</p>
+                        <a
+                            href="mailto:{{ $listing->email }}"
+                            class="block bg-laravel text-white mt-6 py-2 rounded-xl hover:opacity-80"
+                        >
+                            <i class="fa-solid fa-envelope px-1"></i>Contact Employer</a>
+                        <a
+                            href="{{ $listing->website }}"
+                            target="_blank"
+                            class="block bg-black text-white py-2 rounded-xl hover:opacity-80"
+                        >
+                            <i class="fa-solid fa-globe"></i> Visit Website
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </x-card>
+    </section>
+@endsection

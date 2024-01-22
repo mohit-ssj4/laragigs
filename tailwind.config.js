@@ -9,7 +9,11 @@ export default {
         fontFamily: {
             "space-grotesk": ["Space Grotesk", "sans-serif"]
         },
-        extend: {},
+        extend: {
+            colors: {
+                laravel: "#ef3b2d",
+            }
+        },
     },
     plugins: [],
 }

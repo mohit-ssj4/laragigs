@@ -21,8 +21,8 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/listings/{id}', function (int $id) {
+Route::get('/listings/{listing}', function (Listing $listing) {
     return view('listing', [
-        'listing' => Listing::where('id', $id)->get()
+        'listing' => $listing
     ]);
-})->where('id', '[0-9]+');
+});
