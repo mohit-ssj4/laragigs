@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Listing;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class ListingController extends Controller
@@ -13,7 +17,9 @@ class ListingController extends Controller
     public function index(): View
     {
         return view('listings.index', [
-            'listings' => Listing::latest()->filter(request(['tag', 'search']))->get()
+            'listings' => Listing::latest()
+                ->filter(request(['tag', 'search']))
+                ->paginate(6)
         ]);
     }
 
@@ -25,5 +31,33 @@ class ListingController extends Controller
         return view('listings.show', [
             'listing' => $listing
         ]);
+    }
+
+    /**
+     * Method to show create listing form
+     */
+    public function create(): View
+    {
+        return view('listings.create');
+    }
+
+    /**
+     * Method to store a new listing
+     */
+    public function store(Request $request): Redirector|RedirectResponse
+    {
+        $formFields = $request->validate([
+            'title' => 'required',
+            'company' => ['required', Rule::unique('listings', 'company')],
+            'location' => 'required',
+            'website' => 'required',
+            'email' => ['required', 'email'],
+            'tags' => 'required',
+            'description' => 'required'
+        ]);
+
+        Listing::create($formFields);
+
+        return redirect('/')->with('message', 'Listing created successfully');
     }
 }

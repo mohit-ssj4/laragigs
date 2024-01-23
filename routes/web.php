@@ -25,5 +25,11 @@ use Illuminate\Support\Facades\Route;
  * destroy  - delete a listing
  */
 
+// Show all listings
 Route::get('/', [ListingController::class, 'index']);
+// Show a create form
+Route::get('/listings/create', [ListingController::class, 'create']);
+// Store a new listing
+Route::post('/listings', [ListingController::class, 'store']);
+// Show a single listing
 Route::get('/listings/{listing}', [ListingController::class, 'show']);
