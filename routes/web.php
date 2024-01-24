@@ -28,6 +28,8 @@ use Illuminate\Support\Facades\Route;
 
 // Show all listings
 Route::get('/', [ListingController::class, 'index']);
+// Manage listings page
+Route::get('/listings/manage', [ListingController::class, 'manage'])->middleware('auth');
 // Show a create form
 Route::get('/listings/create', [ListingController::class, 'create'])->middleware('auth');
 // Store a new listing
@@ -48,6 +50,6 @@ Route::post('/users', [UserController::class, 'store']);
 // Logs user our
 Route::post('/logout', [UserController::class, 'logout'])->middleware('auth');
 // Show login form
-Route::get('/login', [UserController::class, 'login'])->name('login')->middleware('guest');;
+Route::get('/login', [UserController::class, 'login'])->name('login')->middleware('guest');
 // Login user
 Route::post('/users/authenticate', [UserController::class, 'authenticate']);
