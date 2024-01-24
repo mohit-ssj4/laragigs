@@ -6,6 +6,7 @@ use App\Models\Listing;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\File;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
@@ -63,5 +64,42 @@ class ListingController extends Controller
         Listing::create($formFields);
 
         return redirect('/')->with('message', 'Listing created successfully');
+    }
+
+    /**
+     * Method to show the edit listing form
+     */
+    public function edit(Listing $listing): View
+    {
+        return view('listings.edit', [
+            'listing' => $listing
+        ]);
+    }
+
+    /**
+     * Method to update a listing
+     */
+    public function update(Request $request, Listing $listing): Redirector|RedirectResponse
+    {
+        $formFields = $request->validate([
+            'title' => 'required',
+            'company' => ['required'],
+            'location' => 'required',
+            'website' => 'required',
+            'email' => ['required', 'email'],
+            'tags' => 'required',
+            'description' => 'required'
+        ]);
+
+        if ($request->hasFile('logo')) {
+            if ($listing->logo) {
+                File::delete(storage_path("app/public/{$listing->logo}"));
+            }
+            $formFields['logo'] = $request->file('logo')->store('logos', 'public');
+        }
+
+        $listing->update($formFields);
+
+        return redirect("listings/{$listing->id}")->with('message', 'Listing updated successfully');
     }
 }

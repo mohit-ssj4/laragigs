@@ -20,6 +20,11 @@
                 <div class="text-lg my-4">
                     <i class="fa-solid fa-location-dot"></i> {{ $listing->location }}
                 </div>
+                <x-card class="flex px-10 py-2 mb-6 hover:text-white hover:bg-black transition duration-200 cursor-pointer">
+                    <a href="/listings/{{$listing->id}}/edit">
+                        <i class="fa-solid fa-pencil"></i> Edit
+                    </a>
+                </x-card>
                 <div class="border border-gray-200 w-full mb-6"></div>
                 <div>
                     <h3 class="text-3xl font-bold mb-4">
@@ -29,13 +34,13 @@
                         <p>{{ $listing->description }}</p>
                         <a
                             href="mailto:{{ $listing->email }}"
-                            class="block bg-laravel text-white mt-6 py-2 rounded-lg hover:opacity-80"
+                            class="block bg-laravel text-white mt-6 py-2 rounded-lg hover:opacity-80 w-full"
                         >
                             <i class="fa-solid fa-envelope px-1"></i>Contact Employer</a>
                         <a
                             href="{{ $listing->website }}"
                             target="_blank"
-                            class="block bg-black text-white py-2 rounded-lg hover:opacity-80"
+                            class="block bg-black text-white py-2 rounded-lg hover:opacity-80 w-full"
                         >
                             <i class="fa-solid fa-globe"></i> Visit Website
                         </a>
