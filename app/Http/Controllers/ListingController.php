@@ -84,13 +84,13 @@ class ListingController extends Controller
     public function update(Request $request, Listing $listing): Redirector|RedirectResponse
     {
         // Make sure logged-in user is the owner of the listing
-        if ($listing->user()->id() !== auth()->id()) {
+        if ($listing->user_id !== auth()->id()) {
             abort(403, 'Unauthorized');
         }
 
         $formFields = $request->validate([
             'title' => 'required',
-            'company' => ['required'],
+            'company' => 'required',
             'location' => 'required',
             'website' => 'required',
             'email' => ['required', 'email'],
@@ -113,10 +113,10 @@ class ListingController extends Controller
     /**
      * Method to delete a listing
      */
-    public function destroy(Listing $listing)
+    public function destroy(Listing $listing): Redirector|RedirectResponse
     {
         // Make sure logged-in user is the owner of the listing
-        if ($listing->user()->id() !== auth()->id()) {
+        if ($listing->user_id !== auth()->id()) {
             abort(403, 'Unauthorized');
         }
 
